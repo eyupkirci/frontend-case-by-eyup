@@ -1,0 +1,50 @@
+query PopularBlogs($locale: String!, $limit: Int) {
+  Blogs(locale: $locale, limit: $limit) {
+    items {
+      _id
+      _slug
+      title
+      content {
+        ... on Text {
+          text
+        }
+      }
+      categories {
+        slug
+      }
+      banner_image {
+        url
+      }
+    }
+  }
+}
+
+query Similar_Blogs($limit: Int, $similarBlogsId: String!) {
+  Similar_Blogs(limit: $limit, id: $similarBlogsId) {
+    items {
+      _id
+      banner_image {
+        url
+      }
+      title
+      content {
+        ... on Text {
+          text
+        }
+      }
+      categories {
+        slug
+      }
+      _slug
+    }
+  }
+}
+
+query BlogsByTitle($where: BlogWhereInput) {
+  Blogs(where: $where) {
+    items {
+      title
+    }
+    total
+  }
+}
