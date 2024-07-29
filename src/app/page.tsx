@@ -33,7 +33,7 @@ export default async function Home() {
         <h2 className="mt-12 py-5 text-3xl md:text-5xl">De nieuwste blogs</h2>
 
         {items?.length > 1 ? (
-          <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-12 bg-white py-5 md:m-auto md:flex-row dark:bg-gray-100">
+          <div className="mx-auto flex w-full max-w-screen-2xl flex-col gap-12 bg-white py-5 dark:bg-gray-100 md:m-auto md:flex-row">
             {items?.map((item: ICard) => <Card key={item._id} data={item} />)}
           </div>
         ) : (
