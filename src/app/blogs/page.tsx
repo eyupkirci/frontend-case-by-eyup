@@ -3,45 +3,19 @@
 import { useEffect, useState } from 'react';
 
 import Card from '@/app/components/Card';
-import type { ICard } from '@/app/types';
+import type { ICard, IInputState, PaginationState } from '@/app/types';
 import { getAllBlogs } from '@/app/utils/actions';
-
-interface PaginationState {
-  currentPage: number;
-  totalPages: number;
-  startIndex: number;
-  endIndex: number;
-}
+import { createPagination } from '@/app/utils/functions';
 
 const ITEM_PER_PAGE = 9;
-
-const createPagination = (length: number, currentPage: number) => {
-  const array = [];
-  for (let i = 0; i < length; i++) {
-    if (
-      i === 0 ||
-      i === currentPage - 2 ||
-      i === currentPage - 1 ||
-      i === currentPage ||
-      i === length - 2 ||
-      i === length - 1
-    ) {
-      array.push(i + 1);
-    } else if (i + 3 === currentPage || i + 2 === length - 1) {
-      array.push('...');
-    }
-  }
-
-  return array;
-};
 
 export default function Blogs() {
   const [blogs, setBlogs] = useState<ICard[]>([]);
   const [filteredBlogs, setFilteredBlogs] = useState<ICard[]>([]);
-  const [search, setSearch] = useState<{
-    input: string;
-    slug: { label: string; value: string };
-  }>({ input: '', slug: { label: 'all blogs', value: '' } });
+  const [search, setSearch] = useState<IInputState>({
+    input: '',
+    slug: { label: 'all blogs', value: '' },
+  });
   const [searchParam, setSearchParam] = useState<string>('');
   const [pagination, setPagination] = useState<PaginationState>({
     currentPage: 1,
@@ -49,7 +23,6 @@ export default function Blogs() {
     startIndex: 0,
     endIndex: ITEM_PER_PAGE,
   });
-  console.log('🚀 ~ Blogs ~ pagination:', pagination);
 
   //initial data fetch
   useEffect(() => {
@@ -61,7 +34,7 @@ export default function Blogs() {
           setFilteredBlogs(items);
           setPagination({
             ...pagination,
-            totalPages: Math.max(Math.ceil(items?.length / ITEM_PER_PAGE), 1),
+            totalPages: Math.max(Math.ceil(items.length / ITEM_PER_PAGE), 1),
             currentPage: 1,
             startIndex: 0,
             endIndex: ITEM_PER_PAGE,
@@ -79,9 +52,9 @@ export default function Blogs() {
   useEffect(() => {
     const handleFilter = () => {
       const NewList = blogs
-        .filter((blog) => blog?.title?.toLowerCase().includes(search.input.toLowerCase()))
+        .filter((blog) => blog.title.toLowerCase().includes(search.input.toLowerCase()))
         .filter((blog) =>
-          blog?.categories[0]?.slug?.toLowerCase().includes(search.slug.value.toLowerCase()),
+          blog.categories[0].slug.toLowerCase().includes(search.slug.value.toLowerCase()),
         );
 
       setPagination({
@@ -214,7 +187,7 @@ export default function Blogs() {
         <section className="m-3 flex items-center gap-4">
           <button disabled={pagination.currentPage === 1} type="button" onClick={handlePrev}>
             <svg
-              className="inline-block size-4 text-gray-200 rtl:rotate-180 dark:text-black"
+              className="inline-block size-4 text-gray-200 dark:text-black rtl:rotate-180"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -228,20 +201,7 @@ export default function Blogs() {
             </svg>
           </button>
 
-          {/* {Array.from({ length: pagination.totalPages }, (_, index) => {
-            return (
-              <button
-                disabled={pagination.currentPage === index + 1}
-                type="button"
-                className={`rounded-lg border border-gray-100 px-4 py-2 text-black ${pagination.currentPage === index + 1 ? 'bg-[#371172] text-white' : ''}`}
-                key={index}
-                onClick={(event) => {
-                  handlePageClick(+event.target.innerText - 1);
-                }}>
-                {index + 1}
-              </button>
-            );
-          })} */}
+          {/* Pagaination Numbers */}
 
           {createPagination(pagination.totalPages, pagination.currentPage).map((page, index) => {
             return (
@@ -263,7 +223,7 @@ export default function Blogs() {
             type="button"
             onClick={handleNext}>
             <svg
-              className="inline-block size-4 rtl:rotate-180 dark:text-black"
+              className="inline-block size-4 dark:text-black rtl:rotate-180"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

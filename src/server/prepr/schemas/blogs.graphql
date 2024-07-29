@@ -1,11 +1,37 @@
-query PopularBlogs($locale: String!, $limit: Int) {
-  Blogs(locale: $locale, limit: $limit) {
+query GetBlogs($limit: Int) {
+  Blogs(limit: $limit) {
     items {
       _id
       _slug
       title
       content {
         ... on Text {
+          html
+          text
+        }
+      }
+      categories {
+        slug
+      }
+      banner_image {
+        url
+      }
+      _last_published_on
+    }
+    total
+  }
+}
+
+query GetNewestBlogs($limit: Int, $sort: BlogSortInput) {
+  Blogs(limit: $limit, sort: $sort) {
+    items {
+      _id
+      _slug
+      _last_published_on
+      title
+      content {
+        ... on Text {
+          html
           text
         }
       }
@@ -16,6 +42,31 @@ query PopularBlogs($locale: String!, $limit: Int) {
         url
       }
     }
+    total
+  }
+}
+
+query PopularBlogs($limit: Int) {
+  Popular_Blogs(limit: $limit) {
+    items {
+      _id
+      _slug
+      title
+      _last_published_on
+      content {
+        ... on Text {
+          text
+          html
+        }
+      }
+      categories {
+        slug
+      }
+      banner_image {
+        url
+      }
+    }
+    total
   }
 }
 
@@ -23,19 +74,21 @@ query Similar_Blogs($limit: Int, $similarBlogsId: String!) {
   Similar_Blogs(limit: $limit, id: $similarBlogsId) {
     items {
       _id
-      banner_image {
-        url
-      }
+      _slug
+      _last_published_on
       title
       content {
         ... on Text {
+          html
           text
         }
       }
       categories {
         slug
       }
-      _slug
+      banner_image {
+        url
+      }
     }
   }
 }
@@ -44,6 +97,30 @@ query BlogsByTitle($where: BlogWhereInput) {
   Blogs(where: $where) {
     items {
       title
+    }
+    total
+  }
+}
+
+query AllBlogsWithHtmlContent($limit: Int) {
+  Blogs(limit: $limit) {
+    items {
+      _id
+      _slug
+      _last_published_on
+      title
+      content {
+        ... on Text {
+          html
+          text
+        }
+      }
+      categories {
+        slug
+      }
+      banner_image {
+        url
+      }
     }
     total
   }

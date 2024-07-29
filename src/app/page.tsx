@@ -5,7 +5,7 @@ import type { ICard } from '@/app/types';
 import { PreprSdk } from '@/server/prepr';
 
 export default async function Home() {
-  const { Blogs } = await PreprSdk.PopularBlogs({ locale: 'en-GB', limit: 3 });
+  const { Blogs } = await PreprSdk.GetNewestBlogs({ limit: 3, sort: 'publish_on_DESC' });
   const { items }: ICard[] = Blogs;
 
   return (

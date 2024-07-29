@@ -1,17 +1,20 @@
 query BlogBySlug($slug: String) {
   Blog(slug: $slug) {
     _id
+    _slug
+    _last_published_on
     title
-    banner_image {
-      url
+    content {
+      ... on Text {
+        html
+        text
+      }
     }
     categories {
       slug
     }
-    content {
-      ... on Text {
-        text
-      }
+    banner_image {
+      url
     }
   }
 }
