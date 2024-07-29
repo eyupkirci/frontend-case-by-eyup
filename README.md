@@ -1,3 +1,19 @@
+## Developer Note:
+
+Thank you for your giving me this opportunity. When it comes to project, it has:
+
+- developed 5 pages: 3 full-functional pages: home, blogs, blogdetail, 2 raw pages: terms and privacy
+- it has been tried to handle all user stories
+- no extra packages utilized to as much as depedency-free project
+- created and utilized reusable custom card, header and footer as components
+- utilized tailwind to ensure responsibility
+- utilized given prepr cms with graphql for data retrieving/fetching
+- developed custom blog search alghoritm filtering topic and text inputs
+- developed custom generic pagination
+- provided blog html content rendered without dangerouslySetInnerHTML, in a more secure way by developing custom renderer/parser function
+
+Regards,
+
 ## Introduction
 
 Thank you for the great interview we had! Below, as promised, is the application case for the front-end developer position at 2DIGITS. Once you are done with this you can put it on public GitHub repository and send a link to [luuk@socialbrothers.nl](mailto:luuk@socialbrothers.nl).
