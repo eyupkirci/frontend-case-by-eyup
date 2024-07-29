@@ -46,30 +46,6 @@ query GetNewestBlogs($limit: Int, $sort: BlogSortInput) {
   }
 }
 
-query PopularBlogs($limit: Int) {
-  Popular_Blogs(limit: $limit) {
-    items {
-      _id
-      _slug
-      title
-      _last_published_on
-      content {
-        ... on Text {
-          text
-          html
-        }
-      }
-      categories {
-        slug
-      }
-      banner_image {
-        url
-      }
-    }
-    total
-  }
-}
-
 query Similar_Blogs($limit: Int, $similarBlogsId: String!) {
   Similar_Blogs(limit: $limit, id: $similarBlogsId) {
     items {
@@ -90,15 +66,6 @@ query Similar_Blogs($limit: Int, $similarBlogsId: String!) {
         url
       }
     }
-  }
-}
-
-query BlogsByTitle($where: BlogWhereInput) {
-  Blogs(where: $where) {
-    items {
-      title
-    }
-    total
   }
 }
 
