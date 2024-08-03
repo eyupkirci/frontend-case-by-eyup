@@ -11,6 +11,7 @@ Thank you for giving me this opportunity. When it comes to project, it has:
 - developed custom blog search algorithm filtering topic and text inputs
 - developed custom generic pagination
 - provided blog html content rendered without dangerouslySetInnerHTML, in a more secure way by developing custom renderer/parser function.
+- added docker configuration to project base
 
 Regards,
 
